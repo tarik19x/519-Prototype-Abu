@@ -15,7 +15,11 @@ public class SoundManager : SingletonMonoBehavior<SoundManager>
         {
             effectsSource.Stop();
         }
-        effectsSource.PlayOneShot(clip);
+        else
+        {
+            effectsSource.PlayOneShot(clip);
+        }
+       
     }
     
     public void ToggleMusic()
