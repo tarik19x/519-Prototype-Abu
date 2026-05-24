@@ -1,6 +1,6 @@
-# Abu Simbel VR — An Accessible Virtual Heritage Experience for Older Adults
+# Abu Simbel VR
 
-> A room-scale virtual reality application that lets users explore a 3D reconstruction of the **Abu Simbel Temple** (South Egypt) through teleport-based locomotion, diegetic audio narration, and low-effort controller interactions — designed *with* older adults through a multi-month co-design process.
+A virtual reality travel application built for older adults, developed through a six-month co-design study. The starting point was not the application — it was the people. The temple of Abu Simbel, the teleportation-based movement, and the narrated tour were all decisions that came out of the co-design sessions, not assumptions made before them.
 
 <p align="left">
   <img alt="Unity" src="https://img.shields.io/badge/Unity-2022.3.24f1_LTS-000000?logo=unity">
@@ -15,65 +15,57 @@
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Research Motivation](#research-motivation)
-- [Features](#features)
+- [About the Project](#about-the-project)
+- [How the Application Was Decided](#how-the-application-was-decided)
+- [What the Application Does](#what-the-application-does)
 - [Tech Stack](#tech-stack)
 - [System Architecture](#system-architecture)
 - [Script Reference](#script-reference)
 - [Controls](#controls)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
-- [Build & Deployment (Meta Quest)](#build--deployment-meta-quest)
-- [The Co-Design Process](#the-co-design-process)
-- [Roadmap & Known Limitations](#roadmap--known-limitations)
-- [Credits & Acknowledgements](#credits--acknowledgements)
+- [Build and Deployment (Meta Quest)](#build-and-deployment-meta-quest)
+- [Roadmap and Known Limitations](#roadmap-and-known-limitations)
+- [Credits](#credits)
 
 ---
 
-## Overview
+## About the Project
 
-**Abu Simbel VR** is an immersive heritage-tourism prototype built in Unity for the Meta Quest family of head-mounted displays. The user is placed inside a 3D virtual model of the Abu Simbel temple complex and can:
+Most VR applications are built without older adults in mind. Older users often have accessibility needs and interaction preferences that standard VR ignores — comfort with the controllers, a preference for teleportation over continuous locomotion, pacing of audio and narration, and so on. When applications are designed, these requirements are rarely considered.
 
-- **Teleport** between curated vantage points instead of free-walking, reducing fatigue and motion sickness.
-- **Trigger contextual audio** by approaching or interacting with points of interest within the scene (the "museum objects").
-- **Switch between multiple voice narrators**, each offering a different guided-tour personality, with a single controller button.
-- **Listen to spatialized audio** rendered through the Meta XR Audio SDK for a believable sense of place.
+This project was set up to do the opposite. The goal was to run a co-design process with older adults, gather their requirements first, and let the actual application take shape from what they wanted. The result is **Abu Simbel VR**, a virtual reality travel application for the Meta Quest, but the application is the output of the process rather than its premise.
 
-The application was not built as a generic VR demo. Every interaction pattern — locomotion, button mapping, audio pacing, and UI affordances — was **tailored to an older-adult audience** and refined iteratively through direct user feedback.
+The work ran for roughly six months. The first three months were spent on the co-design itself — establishing what to build and how to fit it to the participants' requirements. Development came afterward, with weekly check-ins so participants could react to each implementation as it was built.
 
 ---
 
-## Research Motivation
+## How the Application Was Decided
 
-Mainstream VR experiences assume dexterity, spatial confidence, and prior gaming literacy that many older adults do not have. They also tend to rely on physical movement that is uncomfortable or inaccessible for users with limited mobility.
+The application was not chosen up front. It was filtered out of the co-design sessions step by step.
 
-This project asks a focused question:
+**Familiarization.** Before any design work, participants were introduced to how VR and AR work. They tried existing applications from both industry and research, including consumer titles such as *Wander*, so that their feedback came from direct use rather than description.
 
-> *What does a virtual heritage experience look like when older adults shape it from the very first design decision?*
+**Finding the direction.** With that experience in place, the sessions moved into open discussion — what participants liked and disliked about VR, what felt comfortable, and what they would actually want to use. A virtual travel application came out of this. Further sessions narrowed down where they wanted to go; the destination could have been somewhere in Europe or elsewhere, and Abu Simbel was the place that emerged.
 
-The answer drove concrete engineering choices throughout the codebase:
+**Designing the interactions.** Specific interaction methods were worked out the same way. Three to four co-design weeks were spent discussing teleportation and locomotion methods alone, and the voice-narration approach was decided through its own set of sessions. The teleport movement, the single-button narrator switch, and the proximity-triggered audio in this codebase are all direct results of those discussions.
 
-| Design goal | Engineering decision |
-| --- | --- |
-| Minimize physical strain | Teleport-based locomotion rather than continuous movement |
-| Reduce cognitive & motor load | A single, repeatable button toggle for narrator switching (`OVRInput.Button.Two`) |
-| Keep the user oriented and calm | Proximity-triggered audio that plays *to* the user rather than requiring precise aiming |
-| Provide a warm, human guide | Pre-recorded human voice narratives instead of synthetic text-to-speech |
-| Avoid sensory overload | Centralized audio management with global volume and per-channel mute controls |
+**Building it.** Once the direction and the interactions were settled, the application was developed and shown back to the participants week by week, so the implementation stayed close to what they had asked for.
+
+A cohort of **10 older adults** took part throughout.
 
 ---
 
-## Features
+## What the Application Does
 
-- 🏛️ **Explorable 3D Abu Simbel temple** imported as an OBJ/glTF model with authored materials and textures.
-- 🚶 **Teleport locomotion** powered by the Meta XR Interaction SDK (OVR), chosen for comfort and accessibility.
-- 🎧 **Spatialized 3D audio** via the Meta XR Audio SDK for immersive, positional sound.
-- 🗣️ **Multi-narrator system** — switch between distinct guided-tour voices on the fly with one button.
-- 🎯 **Proximity / collision-triggered narration** at points of interest inside the scene.
-- 🔊 **Centralized audio service** with master-volume control and independent music / SFX mute toggles.
-- 🖼️ **360° photo materials** and 3D iconography to anchor the heritage context.
-- 👵 **Accessibility-first interaction design** validated through iterative co-design sessions.
+The user is placed inside a 3D model of the Abu Simbel temple complex (South Egypt) and can:
+
+- **Teleport** between vantage points instead of walking, to reduce fatigue and discomfort.
+- **Trigger narration** by approaching points of interest in the scene.
+- **Switch between voice narrators** with a single controller button, each giving a different guided-tour voice.
+- **Hear spatialized audio** rendered through the Meta XR Audio SDK.
+
+A central audio service handles global volume and separate mute control for the music and effects channels, so the soundscape can be kept comfortable.
 
 ---
 
@@ -82,7 +74,7 @@ The answer drove concrete engineering choices throughout the codebase:
 | Layer | Technology | Version |
 | --- | --- | --- |
 | Engine | Unity LTS | `2022.3.24f1` |
-| Language | C# (.NET / Mono) | — |
+| Language | C# (Mono / .NET) | — |
 | Render pipeline | Universal Render Pipeline (URP) | `14.0.10` |
 | XR runtime | Unity XR Management + Oculus XR Plugin | `4.4.1` / `4.2.0` |
 | Interaction | Meta XR Interaction SDK (OVR) | `63.0.0` |
@@ -97,49 +89,49 @@ The answer drove concrete engineering choices throughout the codebase:
 
 ## System Architecture
 
-The runtime audio layer is the heart of the application. It is organized around a small, deliberately simple set of responsibilities so that non-engineering collaborators could reason about it during co-design sessions.
+The runtime audio layer carries most of the application's logic. It is kept small on purpose, so that it stayed easy to explain to participants during the co-design weeks.
 
 ```
-                    ┌─────────────────────────────┐
-                    │   SingletonMonoBehavior<T>   │   generic, scene-persistent
-                    │   (global access pattern)    │   service base class
-                    └──────────────┬──────────────┘
-                                   │ inherits
-                                   ▼
-                    ┌─────────────────────────────┐
-                    │        SoundManager         │   one audio authority
-                    │  • musicSource (ambient)    │   • PlaySound(clip)
-                    │  • effectsSource (SFX/VO)   │   • ChangeMasterVolume()
-                    │  • SoundManager.Instance    │   • ToggleMusic / ToggleEffects
-                    └──────────────▲──────────────┘
-                                   │ PlaySound(clip)
-              ┌────────────────────┼────────────────────┐
-              │                    │                    │
-   ┌──────────┴─────────┐ ┌────────┴────────┐ ┌─────────┴──────────┐
-   │  ColliderController│ │   SfxHandler    │ │   VoiceManager     │
-   │  proximity trigger │ │  narrator-aware │ │  controller input  │
-   │  → plays clip on   │ │  playback,      │ │  → toggles active  │
-   │    object hit      │ │  reads counter  │ │    narrator index  │
-   └────────────────────┘ └────────┬────────┘ └─────────┬──────────┘
-                                    │   reads counter    │
-                                    └────────────────────┘
+                    +------------------------------+
+                    |   SingletonMonoBehavior<T>   |   scene-persistent
+                    |   (global access pattern)    |   service base class
+                    +--------------+---------------+
+                                   | inherits
+                                   v
+                    +------------------------------+
+                    |         SoundManager         |   single audio authority
+                    |  - musicSource (ambient)     |   - PlaySound(clip)
+                    |  - effectsSource (SFX / VO)  |   - ChangeMasterVolume()
+                    |  - SoundManager.Instance     |   - ToggleMusic / ToggleEffects
+                    +--------------^---------------+
+                                   | PlaySound(clip)
+            +----------------------+----------------------+
+            |                      |                      |
+ +----------+---------+  +---------+--------+  +----------+---------+
+ | ColliderController |  |    SfxHandler    |  |   VoiceManager     |
+ | proximity trigger  |  | narrator-aware   |  | controller input   |
+ | plays clip on      |  | playback, reads  |  | toggles the active |
+ | object contact     |  | the counter      |  | narrator index     |
+ +--------------------+  +---------+--------+  +----------+---------+
+                                   |  reads counter       |
+                                   +----------------------+
 ```
 
-**Design principles applied**
+The ideas behind this layout:
 
-- **Single Responsibility** — each script does exactly one thing (input, selection, playback, triggering).
-- **Centralized audio authority** — all playback routes through `SoundManager` so volume, muting, and channel policy live in one place.
-- **Global access via Singleton** — `SoundManager.Instance` is reachable from any trigger or interaction without scene-wide references.
-- **State-driven narrator selection** — narrator choice is a single integer (`counter`) shared between `VoiceManager` and `SfxHandler`, keeping the toggle logic trivial and predictable for users.
+- **One job per script** — input, narrator selection, playback, and triggering are each handled separately.
+- **One audio authority** — every clip goes through `SoundManager`, so volume, muting, and channel rules live in a single place.
+- **Global access through a singleton** — `SoundManager.Instance` is reachable from any trigger without wiring references across the scene.
+- **A single shared index for narrators** — `VoiceManager` and `SfxHandler` share one integer (`counter`), which keeps the narrator toggle simple and predictable for the user.
 
 ---
 
 ## Script Reference
 
-All first-party gameplay scripts live in `Assets/_Scripts/` (plus `Assets/AudioTrigger.cs`). Everything under `Assets/Samples/`, `Assets/Oculus/`, `Assets/UI Icons - 3D Low Poly Style/`, and `Assets/TutorialInfo/` is third-party SDK or asset-pack code.
+The first-party scripts are in `Assets/_Scripts/`, plus `Assets/AudioTrigger.cs`. Everything under `Assets/Samples/`, `Assets/Oculus/`, `Assets/UI Icons - 3D Low Poly Style/`, and `Assets/TutorialInfo/` is third-party SDK or asset-pack code.
 
 ### `SingletonMonoBehavior<T>`
-A reusable generic base class implementing the Singleton pattern for `MonoBehaviour` services. On `Awake()` it caches the instance and destroys any duplicate that appears in the scene, guaranteeing a single global access point via the static `Instance` property.
+A generic Singleton base class for `MonoBehaviour` services. On `Awake()` it caches the instance and destroys any duplicate in the scene, so there is always one global access point through the static `Instance` property.
 
 ```csharp
 public abstract class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour, new()
@@ -150,33 +142,31 @@ public abstract class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBeh
 ```
 
 ### `SoundManager`
-The single audio authority for the application, derived from `SingletonMonoBehavior<SoundManager>`. It owns two `AudioSource` channels — `musicSource` (ambient bed) and `effectsSource` (narration / SFX) — and exposes:
+The single audio authority, derived from `SingletonMonoBehavior<SoundManager>`. It holds two `AudioSource` channels — `musicSource` for ambient sound and `effectsSource` for narration and effects — and exposes:
 
 | Method | Purpose |
 | --- | --- |
-| `PlaySound(AudioClip clip)` | Plays a one-shot clip on the effects channel, guarding against overlapping playback. |
+| `PlaySound(AudioClip clip)` | Plays a one-shot clip on the effects channel, guarding against overlap. |
 | `ChangeMasterVolume(float val)` | Sets the global `AudioListener.volume`. |
-| `ToggleMusic()` | Mutes / unmutes the ambient music channel. |
-| `ToggleEffects()` | Mutes / unmutes the effects channel. |
+| `ToggleMusic()` | Mutes and unmutes the ambient music channel. |
+| `ToggleEffects()` | Mutes and unmutes the effects channel. |
 
 ### `VoiceManager`
-Handles **narrator switching** from the VR controller. It polls `OVRInput.Button.Two` (the **B** button) and detects a *release* event (debounced press-then-release) to advance an index. The `counter` cycles modulo 2 across the two available narrators and triggers the corresponding `AudioSource` directly.
+Handles narrator switching from the controller. It reads `OVRInput.Button.Two` (the **B** button) and acts on the release of a press, advancing an index. The `counter` cycles modulo 2 across the two narrators and plays the matching `AudioSource`.
 
 ```csharp
 isBPressed = OVRInput.Get(OVRInput.Button.Two);
-// on release: counter = (counter + 1) % 2  →  play GR or RM
+// on release: counter = (counter + 1) % 2  ->  play GR or RM
 ```
 
 ### `SfxHandler`
-A lightweight bridge that reads the current narrator index from `VoiceManager.counter` and routes the matching narrator clip (`GR` or `RB`) through `SoundManager.PlaySound()`. This keeps narrator selection and playback decoupled — selection lives in `VoiceManager`, playback policy lives in `SoundManager`.
+Reads the current narrator index from `VoiceManager.counter` and sends the matching narrator clip (`GR` or `RB`) to `SoundManager.PlaySound()`. Selection stays in `VoiceManager`; playback stays in `SoundManager`.
 
 ### `ColliderController`
-A **proximity / collision trigger**. When a designated object (e.g. `SoundIcon_FourStatus`) enters its collider via `OnTriggerEnter`, it plays the assigned `AudioClip` through the `SoundManager`. This is the mechanism behind "walk up to a museum object and hear about it."
+A proximity trigger. When a target object (for example `SoundIcon_FourStatus`) enters its collider through `OnTriggerEnter`, it plays the assigned `AudioClip` through `SoundManager`. This is how approaching an object in the scene starts its narration.
 
 ### `AudioTrigger`
-A trigger scaffold wired to the `Player` tag with `OnTriggerEnter` / `OnTriggerExit` hooks — the extension point for region-based audio events (entering/leaving a chamber or zone).
-
-> **Narrators.** The two voice tracks shipped in `Assets/Audios/` correspond to the `GR` and `RB`/`RM` references in code, giving users a choice of guided-tour personality.
+A trigger scaffold tied to the `Player` tag, with `OnTriggerEnter` and `OnTriggerExit` hooks. It is the place to add region-based audio events such as entering or leaving a chamber.
 
 ---
 
@@ -185,8 +175,8 @@ A trigger scaffold wired to the `Player` tag with `OnTriggerEnter` / `OnTriggerE
 | Action | Input |
 | --- | --- |
 | Switch narrator | **B** button (`OVRInput.Button.Two`) |
-| Teleport / locomotion | Meta XR Interaction SDK teleport interactor (controller ray + thumbstick) |
-| Trigger object narration | Move into a point-of-interest trigger volume |
+| Teleport / movement | Meta XR Interaction SDK teleport interactor (controller ray + thumbstick) |
+| Start object narration | Move into a point-of-interest trigger volume |
 
 ---
 
@@ -194,25 +184,25 @@ A trigger scaffold wired to the `Player` tag with `OnTriggerEnter` / `OnTriggerE
 
 ```
 519-Prototype-Abu/
-├── Assets/
-│   ├── _Scripts/                  # First-party gameplay logic
-│   │   ├── SingletonMonoBehaviour.cs
-│   │   ├── SoundManager.cs
-│   │   ├── VoiceManager.cs
-│   │   ├── SfxHandler.cs
-│   │   └── ColliderController.cs
-│   ├── AudioTrigger.cs            # Region trigger scaffold
-│   ├── _Scenes/                   # Application scenes
-│   ├── Audios/                    # Narrator voice tracks (multiple narrators)
-│   ├── Models/                    # Abu Simbel temple (OBJ) + sound-icon models
-│   ├── 360 Photos/                # 360° environment materials
-│   ├── Materials/ · Images/       # Authored materials & textures
-│   ├── UI Icons - 3D Low Poly Style/   # Third-party UI asset pack
-│   ├── Samples/                   # Meta XR SDK sample scenes (Audio / Core / Interaction)
-│   ├── Oculus/ · XR/ · Plugins/Android/   # XR runtime & platform glue
-│   └── TextMesh Pro/ · Resources/ · Settings/
-├── Packages/                      # Unity Package Manager manifest
-└── ProjectSettings/               # Unity 2022.3.24f1 project configuration
+|-- Assets/
+|   |-- _Scripts/                  # First-party logic
+|   |   |-- SingletonMonoBehaviour.cs
+|   |   |-- SoundManager.cs
+|   |   |-- VoiceManager.cs
+|   |   |-- SfxHandler.cs
+|   |   |-- ColliderController.cs
+|   |-- AudioTrigger.cs            # Region trigger scaffold
+|   |-- _Scenes/                   # Application scenes
+|   |-- Audios/                    # Narrator voice tracks
+|   |-- Models/                    # Abu Simbel temple (OBJ) and sound-icon models
+|   |-- 360 Photos/                # 360-degree environment materials
+|   |-- Materials/ . Images/       # Materials and textures
+|   |-- UI Icons - 3D Low Poly Style/   # Third-party UI asset pack
+|   |-- Samples/                   # Meta XR SDK sample scenes
+|   |-- Oculus/ . XR/ . Plugins/Android/   # XR runtime and platform glue
+|   |-- TextMesh Pro/ . Resources/ . Settings/
+|-- Packages/                      # Unity Package Manager manifest
+|-- ProjectSettings/               # Unity 2022.3.24f1 configuration
 ```
 
 ---
@@ -221,73 +211,49 @@ A trigger scaffold wired to the `Player` tag with `OnTriggerEnter` / `OnTriggerE
 
 ### Prerequisites
 
-- **Unity `2022.3.24f1`** (install via Unity Hub — the version is pinned in `ProjectSettings/ProjectVersion.txt`).
-- **Android Build Support** module (SDK, NDK, OpenJDK) for Meta Quest deployment.
-- A **Meta Quest** headset (Quest 2 / 3 / Pro) with Developer Mode enabled.
-- Meta XR SDK dependencies resolve automatically through the Package Manager manifest.
+- **Unity `2022.3.24f1`**, installed through Unity Hub. The version is pinned in `ProjectSettings/ProjectVersion.txt`.
+- **Android Build Support** (SDK, NDK, OpenJDK) for Meta Quest deployment.
+- A **Meta Quest** headset (Quest 2, 3, or Pro) with Developer Mode on.
+- Meta XR SDK dependencies resolve through the Package Manager manifest.
 
-### Clone & open
+### Clone and open
 
 ```bash
 git clone https://github.com/tarik19x/519-Prototype-Abu.git
 ```
 
-1. Open **Unity Hub → Add → Open Project** and select the cloned folder.
-2. Let the Package Manager restore all dependencies (Meta XR SDK `63.0.0`, URP, GLTFUtility, etc.).
-3. Open the scene under `Assets/_Scenes/`.
-4. Press **Play** with Quest Link / Air Link connected to preview in-editor, or build to device (below).
+1. Open Unity Hub, choose **Add**, and select the cloned folder.
+2. Let the Package Manager restore the dependencies (Meta XR SDK `63.0.0`, URP, GLTFUtility, and the rest).
+3. Open the scene in `Assets/_Scenes/`.
+4. Press **Play** with Quest Link or Air Link connected to preview in the editor, or build to the device as below.
 
 ---
 
-## Build & Deployment (Meta Quest)
+## Build and Deployment (Meta Quest)
 
-1. **File → Build Settings → Android**, then **Switch Platform**.
-2. Confirm XR setup under **Project Settings → XR Plug-in Management → Android → Oculus**.
+1. **File > Build Settings > Android**, then **Switch Platform**.
+2. Check the XR setup under **Project Settings > XR Plug-in Management > Android > Oculus**.
 3. Set **Texture Compression** to `ASTC`.
-4. Connect the headset via USB, enable USB debugging, and allow the connection prompt inside the headset.
-5. Select your device under **Run Device** and click **Build And Run** to deploy the `.apk`.
+4. Connect the headset over USB, enable USB debugging, and accept the prompt inside the headset.
+5. Pick the device under **Run Device** and choose **Build And Run** to deploy the APK.
 
 ---
 
-## The Co-Design Process
+## Roadmap and Known Limitations
 
-This prototype is the output of a **6–7 month** participatory development cycle that placed older adults at the center of every decision.
+This is a research prototype, and there are clear next steps:
 
-**Participants.** A cohort of **10 older adults** contributed throughout the project.
-
-**Phase 1 — Familiarization.** Participants were introduced to the fundamentals of virtual and augmented reality. They tried established VR products from both industry and research (including consumer applications such as *Wander*), so that feedback came from lived experience rather than abstraction.
-
-**Phase 2 — Co-design (≈3 months).** In structured sessions the team gathered feedback on:
-- what participants enjoyed and disliked about VR,
-- preferred locomotion and interaction styles,
-- comfort with the controllers, and
-- their requirements and expectations for a heritage experience.
-
-**Phase 3 — Iterative build.** The application was developed *on the fly* alongside these sessions. Each week the team demonstrated the latest implementation, and controller interaction patterns were customized directly from participant input — producing the teleport locomotion, single-button narrator toggle, and proximity-triggered narration seen in the codebase.
-
-The result is a VR pipeline deliberately re-tailored from defaults to fit the needs, comfort, and preferences of an older-adult audience.
+- **`AudioTrigger`** is a scaffold; its `OnTriggerEnter` and `OnTriggerExit` bodies are placeholders for region-audio logic.
+- **`SoundManager.PlaySound`** stops the effects channel when a clip is already playing rather than queuing — an anti-overlap guard that could grow into a proper playback queue.
+- **Narrators are fixed to two voices** through a modulo-2 counter. Moving to an array of narrators would make the system data-driven.
+- **`ColliderController`** matches objects by `gameObject.name`. Tags, layers, or a `ScriptableObject` registry would be more reliable.
+- Add automated tests (the Unity Test Framework is already in the project) and an in-VR options menu for accessibility settings such as subtitles, narration speed, and comfort vignetting.
 
 ---
 
-## Roadmap & Known Limitations
+## Credits
 
-This is a **research prototype** (as reflected in the repository name), and there are clear opportunities to harden it for production:
-
-- **`AudioTrigger`** is currently a scaffold; its `OnTriggerEnter` / `OnTriggerExit` bodies are placeholders awaiting region-audio logic.
-- **`SoundManager.PlaySound`** stops the effects channel when a clip is already playing rather than queuing or layering — a deliberate anti-overlap guard that could be extended into a proper playback queue.
-- **Narrator references are hard-coded to two voices** via a modulo-2 counter. Generalizing to an array of narrators would make the system data-driven and scalable.
-- **`ColliderController`** matches points of interest by `gameObject.name` string comparison; migrating to tags, layers, or a `ScriptableObject` registry would be more robust.
-- Add automated tests (the project already includes the Unity Test Framework) and accessibility settings exposed through an in-VR options menu (subtitles, narration speed, comfort vignetting).
-
----
-
-## Credits & Acknowledgements
-
-- **Heritage subject:** Abu Simbel Temple complex, South Egypt.
-- **Voice narration:** multiple pre-recorded narrator tracks (see `Assets/Audios/`).
-- **Third-party packages:** Meta XR SDK (Audio, Interaction OVR, Platform), Unity Universal Render Pipeline, GLTFUtility by *siccity*, TextMeshPro, and the *UI Icons – 3D Low Poly Style* asset pack.
-- **With deepest thanks to the 10 older-adult co-designers** whose feedback shaped every interaction in this application.
-
----
-
-*Built with Unity and the Meta XR SDK as an accessibility-focused virtual heritage prototype.*
+- **Heritage subject:** Abu Simbel temple complex, South Egypt.
+- **Voice narration:** the narrator tracks in `Assets/Audios/`.
+- **Third-party packages:** Meta XR SDK (Audio, Interaction OVR, Platform), Unity Universal Render Pipeline, GLTFUtility by siccity, TextMeshPro, and the *UI Icons - 3D Low Poly Style* asset pack.
+- **The 10 older adults** who took part in the co-design sessions and shaped what this application became.
